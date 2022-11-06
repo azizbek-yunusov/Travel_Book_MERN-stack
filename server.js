@@ -1,14 +1,17 @@
 const express = require("express");
-require("dotenv").config()
 const connectDB = require("./config/db")
+require("dotenv").config()
+const travelRotes = require("./routes/travelRoutes")
 
 connectDB()
 
 const app = express();
 
-app.get("/", (req, res) => {
-  res.send("hello")
-})
+// body parser
+app.use(express.json())
+app.use(express.urlencoded({extended: false}))
+
+app.use("/api/travel", travelRotes)
 const PORT = process.env.PORT || 5000;
 
 app.listen(
